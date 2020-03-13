@@ -17,7 +17,9 @@ data "aws_subnet_ids" "public" {
 
   filter {
     name   = "tag:${var.subnet_tag}"
-    values = [var.public_subnets]
+    values = [
+      var.public_subnets
+    ]
   }
   depends_on = [
     null_resource.module_depends_on
@@ -29,7 +31,9 @@ data "aws_subnet_ids" "private" {
 
   filter {
     name   = "tag:${var.subnet_tag}"
-    values = [var.private_subnets]
+    values = [
+      var.private_subnets
+    ]
   }
   depends_on = [
     null_resource.module_depends_on
