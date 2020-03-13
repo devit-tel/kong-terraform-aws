@@ -52,7 +52,7 @@ data "aws_security_group" "default" {
 }
 
 data "aws_acm_certificate" "external-cert" {
-  domain = var.ssl_cert_externa
+  domain = var.ssl_cert_external
   depends_on = [
     null_resource.module_depends_on
   ]
