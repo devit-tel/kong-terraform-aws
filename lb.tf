@@ -1,10 +1,10 @@
-# External - HTTPS only
+# External - TLS only
 resource "aws_lb_target_group" "external" {
   count = var.enable_external_lb ? 1 : 0
 
   name     = format("%s-%s-external", var.service, var.environment)
   port     = 8000
-  protocol = "HTTP"
+  protocol = "TCP"
   vpc_id   = data.aws_vpc.vpc.id
 
   health_check {
@@ -55,7 +55,7 @@ resource "aws_lb_listener" "external-https" {
 
   load_balancer_arn = aws_lb.external[0].arn
   port              = "443"
-  protocol          = "HTTPS"
+  protocol          = "TLS"
   ssl_policy      = var.ssl_policy
   certificate_arn = data.aws_acm_certificate.external-cert.arn
 
@@ -71,7 +71,7 @@ resource "aws_lb_target_group" "internal" {
 
   name     = format("%s-%s-internal", var.service, var.environment)
   port     = 8000
-  protocol = "HTTP"
+  protocol = "TCP"
   vpc_id   = data.aws_vpc.vpc.id
 
   health_check {
@@ -99,7 +99,7 @@ resource "aws_lb_target_group" "admin" {
 
   name     = format("%s-%s-admin", var.service, var.environment)
   port     = 8001
-  protocol = "HTTP"
+  protocol = "TCP"
   vpc_id   = data.aws_vpc.vpc.id
 
   health_check {
@@ -127,7 +127,7 @@ resource "aws_lb_target_group" "manager" {
 
   name     = format("%s-%s-manager", var.service, var.environment)
   port     = 8002
-  protocol = "HTTP"
+  protocol = "TCP"
   vpc_id   = data.aws_vpc.vpc.id
 
   health_check {
@@ -155,7 +155,7 @@ resource "aws_lb_target_group" "portal-gui" {
 
   name     = format("%s-%s-porter-gui", var.service, var.environment)
   port     = 8003
-  protocol = "HTTP"
+  protocol = "TCP"
   vpc_id   = data.aws_vpc.vpc.id
 
   health_check {
@@ -183,7 +183,7 @@ resource "aws_lb_target_group" "portal" {
 
   name     = format("%s-%s-portal", var.service, var.environment)
   port     = 8004
-  protocol = "HTTP"
+  protocol = "TCP"
   vpc_id   = data.aws_vpc.vpc.id
 
   health_check {
@@ -234,7 +234,7 @@ resource "aws_lb_listener" "internal-http" {
 
   load_balancer_arn = aws_lb.internal[0].arn
   port              = 80
-  protocol          = "HTTP"
+  protocol          = "TCP"
 
   default_action {
     target_group_arn = aws_lb_target_group.internal[0].arn
@@ -247,7 +247,7 @@ resource "aws_lb_listener" "internal-https" {
 
   load_balancer_arn = aws_lb.internal[0].arn
   port              = 443
-  protocol          = "HTTPS"
+  protocol          = "TLS"
 
   ssl_policy      = var.ssl_policy
   certificate_arn = data.aws_acm_certificate.internal-cert.arn
@@ -263,7 +263,7 @@ resource "aws_lb_listener" "admin" {
 
   load_balancer_arn = aws_lb.internal[0].arn
   port              = 8444
-  protocol          = "HTTPS"
+  protocol          = "TLS"
 
   ssl_policy      = var.ssl_policy
   certificate_arn = data.aws_acm_certificate.internal-cert.arn
@@ -279,7 +279,7 @@ resource "aws_lb_listener" "manager" {
 
   load_balancer_arn = aws_lb.internal[0].arn
   port              = 8445
-  protocol          = "HTTPS"
+  protocol          = "TLS"
 
   ssl_policy      = var.ssl_policy
   certificate_arn = data.aws_acm_certificate.internal-cert.arn
@@ -295,7 +295,7 @@ resource "aws_lb_listener" "portal-gui" {
 
   load_balancer_arn = aws_lb.internal[0].arn
   port              = 8446
-  protocol          = "HTTPS"
+  protocol          = "TLS"
 
   ssl_policy      = var.ssl_policy
   certificate_arn = data.aws_acm_certificate.internal-cert.arn
@@ -311,7 +311,7 @@ resource "aws_lb_listener" "portal" {
 
   load_balancer_arn = aws_lb.internal[0].arn
   port              = 8447
-  protocol          = "HTTPS"
+  protocol          = "TLS"
 
   ssl_policy      = var.ssl_policy
   certificate_arn = data.aws_acm_certificate.internal-cert.arn
