@@ -12,7 +12,7 @@ resource "aws_lb_target_group" "external" {
     interval            = var.health_check_interval
     path                = "/status"
     port                = 8000
-    timeout             = var.health_check_timeout
+    # timeout             = var.health_check_timeout
     unhealthy_threshold = var.health_check_unhealthy_threshold
   }
 
@@ -33,7 +33,7 @@ resource "aws_lb" "external" {
   name     = format("%s-%s-external", var.service, var.environment)
   internal = false
   subnets  = var.public_subnet_ids
-  # load_balancer_type = "network"
+  load_balancer_type = "network"
   security_groups = [aws_security_group.external-lb.id]
 
   enable_deletion_protection = var.enable_deletion_protection
@@ -79,7 +79,7 @@ resource "aws_lb_target_group" "internal" {
     interval            = var.health_check_interval
     path                = "/status"
     port                = 8000
-    timeout             = var.health_check_timeout
+    # timeout             = var.health_check_timeout
     unhealthy_threshold = var.health_check_unhealthy_threshold
   }
 
@@ -107,7 +107,7 @@ resource "aws_lb_target_group" "admin" {
     interval            = var.health_check_interval
     path                = "/status"
     port                = 8000
-    timeout             = var.health_check_timeout
+    # timeout             = var.health_check_timeout
     unhealthy_threshold = var.health_check_unhealthy_threshold
   }
 
@@ -135,7 +135,7 @@ resource "aws_lb_target_group" "manager" {
     interval            = var.health_check_interval
     path                = "/status"
     port                = 8000
-    timeout             = var.health_check_timeout
+    # timeout             = var.health_check_timeout
     unhealthy_threshold = var.health_check_unhealthy_threshold
   }
 
@@ -163,7 +163,7 @@ resource "aws_lb_target_group" "portal-gui" {
     interval            = var.health_check_interval
     path                = "/status"
     port                = 8000
-    timeout             = var.health_check_timeout
+    # timeout             = var.health_check_timeout
     unhealthy_threshold = var.health_check_unhealthy_threshold
   }
 
@@ -191,7 +191,7 @@ resource "aws_lb_target_group" "portal" {
     interval            = var.health_check_interval
     path                = "/status"
     port                = 8000
-    timeout             = var.health_check_timeout
+    # timeout             = var.health_check_timeout
     unhealthy_threshold = var.health_check_unhealthy_threshold
   }
 
