@@ -257,6 +257,13 @@ variable "enable_internal_lb" {
   default = true
 }
 
+variable "enable_internal_lb_admin" {
+  description = "Boolean to enable/create the internal admin api to internal load balancer"
+  type        = string
+
+  default = true
+}
+
 variable "deregistration_delay" {
   description = "Seconds to wait before changing the state of a deregistering target from draining to unused"
   type        = string

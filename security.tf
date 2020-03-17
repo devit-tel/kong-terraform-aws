@@ -303,6 +303,18 @@ resource "aws_security_group_rule" "internal-lb-ingress-proxy-https" {
   cidr_blocks = var.internal_https_cidr_blocks
 }
 
+resource "aws_security_group_rule" "internal-lb-ingress-proxy-admin-http" {
+  count = var.enable_internal_lb && var.enable_internal_lb_admin ? 1 : 0
+  security_group_id = aws_security_group.internal-lb.id
+
+  type      = "ingress"
+  from_port = 8001
+  to_port   = 8001
+  protocol  = "tcp"
+
+  cidr_blocks = var.internal_https_cidr_blocks
+}
+
 resource "aws_security_group_rule" "internal-lb-ingress-admin" {
   count = var.enable_ee ? 1 : 0
 

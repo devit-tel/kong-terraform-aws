@@ -258,6 +258,19 @@ resource "aws_lb_listener" "internal-https" {
   }
 }
 
+resource "aws_lb_listener" "internal-http-admin" {
+  count = var.enable_internal_lb && var.enable_internal_lb_admin ? 1 : 0
+
+  load_balancer_arn = aws_lb.internal[0].arn
+  port              = 8001
+  protocol          = "HTTP"
+
+  default_action {
+    target_group_arn = aws_lb_target_group.internal[0].arn
+    type             = "forward"
+  }
+}
+
 resource "aws_lb_listener" "admin" {
   count = var.enable_ee ? 1 : 0
 
