@@ -4,6 +4,16 @@ variable "vpc_id" {
   type        = string
 }
 
+variable "vpc_cidr_block" {
+  description = "VPC cidr_block"
+  type        = string
+}
+
+variable "aws_region" {
+  description = "Specific region name for cloud-init"
+  type        = string
+}
+
 variable "subnet_tag" {
   description = "Tag used on subnets to define Tier"
   type        = string
