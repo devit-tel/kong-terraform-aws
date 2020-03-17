@@ -13,12 +13,12 @@ variable "subnet_tag" {
 
 variable "private_subnet_ids" {
   description = "Subnet ids on private subnets"
-  type        = string
+  type        = list(string)
 }
 
 variable "public_subnet_ids" {
   description = "Subnet ids on public subnets for external load balancers"
-  type        = string
+  type        = list(string)
 }
 
 variable "default_security_group_id" {
