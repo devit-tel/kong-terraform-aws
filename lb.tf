@@ -5,7 +5,7 @@ resource "aws_lb_target_group" "external" {
   name     = format("%s-%s-external", var.service, var.environment)
   port     = 8000
   protocol = "TCP"
-  vpc_id   = data.aws_vpc.vpc.id
+  vpc_id   = var.vpc_id
 
   health_check {
     healthy_threshold   = var.health_check_healthy_threshold
@@ -32,7 +32,7 @@ resource "aws_lb" "external" {
 
   name     = format("%s-%s-external", var.service, var.environment)
   internal = false
-  subnets  = data.aws_subnet_ids.public.ids
+  subnets  = var.public_subnet_ids
   load_balancer_type = "network"
   #security_groups = [aws_security_group.external-lb.id]
 
@@ -57,7 +57,7 @@ resource "aws_lb_listener" "external-https" {
   port              = "443"
   protocol          = "TLS"
   ssl_policy      = var.ssl_policy
-  certificate_arn = data.aws_acm_certificate.external-cert.arn
+  certificate_arn = var.ssl_cert_external_arn
 
   default_action {
     target_group_arn = aws_lb_target_group.external[0].arn
@@ -72,7 +72,7 @@ resource "aws_lb_target_group" "internal" {
   name     = format("%s-%s-internal", var.service, var.environment)
   port     = 8000
   protocol = "TCP"
-  vpc_id   = data.aws_vpc.vpc.id
+  vpc_id   = var.vpc_id
 
   health_check {
     healthy_threshold   = var.health_check_healthy_threshold
@@ -100,7 +100,7 @@ resource "aws_lb_target_group" "admin" {
   name     = format("%s-%s-admin", var.service, var.environment)
   port     = 8001
   protocol = "TCP"
-  vpc_id   = data.aws_vpc.vpc.id
+  vpc_id   = var.vpc_id
 
   health_check {
     healthy_threshold   = var.health_check_healthy_threshold
@@ -128,7 +128,7 @@ resource "aws_lb_target_group" "manager" {
   name     = format("%s-%s-manager", var.service, var.environment)
   port     = 8002
   protocol = "TCP"
-  vpc_id   = data.aws_vpc.vpc.id
+  vpc_id   = var.vpc_id
 
   health_check {
     healthy_threshold   = var.health_check_healthy_threshold
@@ -156,7 +156,7 @@ resource "aws_lb_target_group" "portal-gui" {
   name     = format("%s-%s-porter-gui", var.service, var.environment)
   port     = 8003
   protocol = "TCP"
-  vpc_id   = data.aws_vpc.vpc.id
+  vpc_id   = var.vpc_id
 
   health_check {
     healthy_threshold   = var.health_check_healthy_threshold
@@ -184,7 +184,7 @@ resource "aws_lb_target_group" "portal" {
   name     = format("%s-%s-portal", var.service, var.environment)
   port     = 8004
   protocol = "TCP"
-  vpc_id   = data.aws_vpc.vpc.id
+  vpc_id   = var.vpc_id
 
   health_check {
     healthy_threshold   = var.health_check_healthy_threshold
@@ -211,7 +211,7 @@ resource "aws_lb" "internal" {
 
   name     = format("%s-%s-internal", var.service, var.environment)
   internal = true
-  subnets  = data.aws_subnet_ids.private.ids
+  subnets  = var.private_subnet_ids
   load_balancer_type = "network"
   # security_groups = [aws_security_group.internal-lb.id]
 
@@ -250,7 +250,7 @@ resource "aws_lb_listener" "internal-https" {
   protocol          = "TLS"
 
   ssl_policy      = var.ssl_policy
-  certificate_arn = data.aws_acm_certificate.internal-cert.arn
+  certificate_arn = var.ssl_cert_internal_arn
 
   default_action {
     target_group_arn = aws_lb_target_group.internal[0].arn
@@ -266,7 +266,7 @@ resource "aws_lb_listener" "admin" {
   protocol          = "TLS"
 
   ssl_policy      = var.ssl_policy
-  certificate_arn = data.aws_acm_certificate.internal-cert.arn
+  certificate_arn = var.ssl_cert_admin_arn
 
   default_action {
     target_group_arn = aws_lb_target_group.admin[0].arn
@@ -282,7 +282,7 @@ resource "aws_lb_listener" "manager" {
   protocol          = "TLS"
 
   ssl_policy      = var.ssl_policy
-  certificate_arn = data.aws_acm_certificate.internal-cert.arn
+  certificate_arn = var.ssl_cert_manager_arn
 
   default_action {
     target_group_arn = aws_lb_target_group.manager[0].arn
@@ -298,7 +298,7 @@ resource "aws_lb_listener" "portal-gui" {
   protocol          = "TLS"
 
   ssl_policy      = var.ssl_policy
-  certificate_arn = data.aws_acm_certificate.internal-cert.arn
+  certificate_arn = var.ssl_cert_portal_arn
 
   default_action {
     target_group_arn = aws_lb_target_group.portal-gui[0].arn
@@ -314,7 +314,7 @@ resource "aws_lb_listener" "portal" {
   protocol          = "TLS"
 
   ssl_policy      = var.ssl_policy
-  certificate_arn = data.aws_acm_certificate.internal-cert.arn
+  certificate_arn = var.ssl_cert_portal_arn
 
   default_action {
     target_group_arn = aws_lb_target_group.portal[0].arn

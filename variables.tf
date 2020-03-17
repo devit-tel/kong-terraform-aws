@@ -1,6 +1,6 @@
 # Network settings
-variable "vpc" {
-  description = "VPC Name for the AWS account and region specified"
+variable "vpc_id" {
+  description = "VPC id for the AWS account and region specified"
   type        = string
 }
 
@@ -11,25 +11,19 @@ variable "subnet_tag" {
   default = "Tier"
 }
 
-variable "private_subnets" {
-  description = "Subnet tag on private subnets"
+variable "private_subnet_ids" {
+  description = "Subnet ids on private subnets"
   type        = string
-
-  default = "private"
 }
 
-variable "public_subnets" {
-  description = "Subnet tag on public subnets for external load balancers"
+variable "public_subnet_ids" {
+  description = "Subnet ids on public subnets for external load balancers"
   type        = string
-
-  default = "public"
 }
 
-variable "default_security_group" {
-  description = "Name of the default VPC security group for EC2 access"
+variable "default_security_group_id" {
+  description = "Id of the default VPC security group for EC2 access"
   type        = string
-
-  default = "default"
 }
 
 # Access control
@@ -165,16 +159,7 @@ variable "ee_license" {
 # https://wiki.ubuntu.com/Minimal
 variable "ec2_ami" {
   description = "Map of Ubuntu Minimal AMIs by region"
-  type        = map(string)
-
-  default = {
-    us-east-1    = "ami-7029320f"
-    us-east-2    = "ami-0350efe0754b8e179"
-    us-west-1    = "ami-657f9006"
-    us-west-2    = "ami-59694f21"
-    eu-central-1 = "ami-19b2bcf2"
-    eu-west-1    = "ami-0395f5f72b8516ef9"
-  }
+  type        = string
 }
 
 variable "ec2_instance_type" {
@@ -325,29 +310,32 @@ variable "idle_timeout" {
   default = 60
 }
 
-variable "ssl_cert_external" {
-  description = "SSL certificate domain name for the external Kong Proxy HTTPS listener"
+variable "ssl_cert_external_arn" {
+  description = "SSL certificate arn domain name for the external Kong Proxy HTTPS listener"
   type        = string
 }
 
-variable "ssl_cert_internal" {
+variable "ssl_cert_internal_arn" {
   description = "SSL certificate domain name for the internal Kong Proxy HTTPS listener"
   type        = string
 }
 
-variable "ssl_cert_admin" {
+variable "ssl_cert_admin_arn" {
   description = "SSL certificate domain name for the Kong Admin API HTTPS listener"
   type        = string
+  default     = ""
 }
 
-variable "ssl_cert_manager" {
+variable "ssl_cert_manager_arn" {
   description = "SSL certificate domain name for the Kong Manager HTTPS listener"
   type        = string
+  default     = ""
 }
 
-variable "ssl_cert_portal" {
+variable "ssl_cert_portal_arn" {
   description = "SSL certificate domain name for the Dev Portal listener"
   type        = string
+  default     = ""
 }
 
 variable "ssl_policy" {
