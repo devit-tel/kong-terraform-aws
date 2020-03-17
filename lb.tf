@@ -33,7 +33,7 @@ resource "aws_lb" "external" {
   name     = format("%s-%s-external", var.service, var.environment)
   internal = false
   subnets  = var.public_subnet_ids
-  load_balancer_type = "network"
+  # load_balancer_type = "network"
   security_groups = [aws_security_group.external-lb.id]
 
   enable_deletion_protection = var.enable_deletion_protection
