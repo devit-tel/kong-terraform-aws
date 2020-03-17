@@ -10,7 +10,7 @@ data "template_file" "shell-script" {
     CE_PKG         = var.ce_pkg
     EE_PKG         = var.ee_pkg
     PARAMETER_PATH = format("/%s/%s", var.service, var.environment)
-    REGION         = var.aws_region_name
+    REGION         = var.aws_region
     VPC_CIDR_BLOCK = var.vpc_cidr_block
     DECK_VERSION   = var.deck_version
     MANAGER_HOST   = local.manager_host
