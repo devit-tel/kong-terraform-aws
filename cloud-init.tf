@@ -6,16 +6,18 @@ data "template_file" "shell-script" {
   template = file("${path.module}/cloud-init.sh")
 
   vars = {
-    DB_USER        = replace(format("%s_%s", var.service, var.environment), "-", "_")
-    CE_PKG         = var.ce_pkg
-    EE_PKG         = var.ee_pkg
-    PARAMETER_PATH = format("/%s/%s", var.service, var.environment)
-    REGION         = var.aws_region
-    VPC_CIDR_BLOCK = var.vpc_cidr_block
-    DECK_VERSION   = var.deck_version
-    MANAGER_HOST   = local.manager_host
-    PORTAL_HOST    = local.portal_host
-    SESSION_SECRET = random_string.session_secret.result
+    DB_USER               = replace(format("%s_%s", var.service, var.environment), "-", "_")
+    CE_PKG                = var.ce_pkg
+    EE_PKG                = var.ee_pkg
+    PARAMETER_PATH        = format("/%s/%s", var.service, var.environment)
+    REGION                = var.aws_region
+    VPC_CIDR_BLOCK        = var.vpc_cidr_block
+    DECK_VERSION          = var.deck_version
+    MANAGER_HOST          = local.manager_host
+    PORTAL_HOST           = local.portal_host
+    SESSION_SECRET        = random_string.session_secret.result
+    KONG_CONF             = var.kong_conf
+    KONG_INIT_SCRIPT      = var.kong_init_script
   }
 }
 

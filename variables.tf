@@ -525,3 +525,13 @@ variable "db_final_snapshot_identifier" {
   type        = string
   default     = ""
 }
+
+variable "kong_conf" {
+  type        = string
+  default     = ""
+}
+
+variable "kong_init_script" {
+  type        = string
+  default     = ""
+}
