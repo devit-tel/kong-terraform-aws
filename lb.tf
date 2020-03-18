@@ -94,6 +94,35 @@ resource "aws_lb_target_group" "internal" {
   )
 }
 
+# Internal
+resource "aws_lb_target_group" "internal_admin" {
+  count = var.enable_internal_lb && var.enable_internal_lb_admin ? 1 : 0
+
+  name     = format("%s-%s-internal-admin", var.service, var.environment)
+  port     = 8001
+  protocol = "HTTP"
+  vpc_id   = var.vpc_id
+
+  health_check {
+    healthy_threshold   = var.health_check_healthy_threshold
+    interval            = var.health_check_interval
+    path                = "/"
+    port                = 8001
+    timeout             = var.health_check_timeout
+    unhealthy_threshold = var.health_check_unhealthy_threshold
+  }
+
+  tags = merge(
+    {
+      "Name"        = format("%s-%s-internal", var.service, var.environment),
+      "Environment" = var.environment,
+      "Description" = var.description,
+      "Service"     = var.service,
+    },
+    var.tags
+  )
+}
+
 resource "aws_lb_target_group" "admin" {
   count = var.enable_ee ? 1 : 0
 
@@ -266,7 +295,7 @@ resource "aws_lb_listener" "internal-http-admin" {
   protocol          = "HTTP"
 
   default_action {
-    target_group_arn = aws_lb_target_group.internal[0].arn
+    target_group_arn = aws_lb_target_group.internal_admin[0].arn
     type             = "forward"
   }
 }
