@@ -19,6 +19,8 @@ dpkg-reconfigure -f noninteractive unattended-upgrades
 # https://github.com/hbagdi/deck
 curl -sL https://github.com/hbagdi/deck/releases/download/v${DECK_VERSION}/deck_${DECK_VERSION}_linux_amd64.tar.gz \
     -o deck.tar.gz
+
+
 tar zxf deck.tar.gz deck
 sudo mv deck /usr/local/bin
 sudo chown root:kong /usr/local/bin/deck
@@ -45,7 +47,9 @@ EOF
     chown root:kong /etc/kong/license.json
     chmod 640 /etc/kong/license.json
 else
-    curl -sL "https://bintray.com/kong/kong-deb/download_file?file_path=${CE_PKG}" \
+    # Comment this line becuase the link was dead
+    #curl -sL "https://bintray.com/kong/kong-deb/download_file?file_path=${CE_PKG}" \
+    curl -sL "https://s3-ap-southeast-1.amazonaws.com/cdn.drivs.io/kong-1.5.0.bionic.amd64.deb" \
         -o ${CE_PKG}
     dpkg -i ${CE_PKG}
 fi
