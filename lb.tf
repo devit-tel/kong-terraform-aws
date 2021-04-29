@@ -39,6 +39,12 @@ resource "aws_lb" "external" {
   enable_deletion_protection = var.enable_deletion_protection
   idle_timeout               = var.idle_timeout
 
+  access_logs {
+    bucket  = var.s3_bucket_access_logs
+    prefix  = var.s3_prefix_access_logs
+    enabled = true
+  }
+
   tags = merge(
     {
       "Name"        = format("%s-%s-external", var.service, var.environment),

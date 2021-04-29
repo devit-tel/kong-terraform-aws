@@ -535,3 +535,19 @@ variable "kong_init_script" {
   type        = string
   default     = ""
 }
+
+variable "enabled_metrics" {
+  description = "A list of metrics to collect. The allowed values are `GroupDesiredCapacity`, `GroupInServiceCapacity`, `GroupPendingCapacity`, `GroupMinSize`, `GroupMaxSize`, `GroupInServiceInstances`, `GroupPendingInstances`, `GroupStandbyInstances`, `GroupStandbyCapacity`, `GroupTerminatingCapacity`, `GroupTerminatingInstances`, `GroupTotalCapacity`, `GroupTotalInstances`"
+  type        = list(string)
+  default     = [ "GroupMinSize", "GroupMaxSize", "GroupDesiredCapacity", "GroupInServiceInstances", "GroupPendingInstances", "GroupStandbyInstances", "GroupTerminatingInstances", "GroupTotalInstances" ]
+}
+
+variable "s3_bucket_access_logs" {
+  type        = string
+  default     = ""
+}
+
+variable "s3_prefix_access_logs" {
+  type        = string
+  default     = ""
+}

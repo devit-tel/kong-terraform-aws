@@ -37,6 +37,7 @@ resource "aws_autoscaling_group" "kong" {
   health_check_type         = "ELB"
   max_size                  = var.asg_max_size
   min_size                  = var.asg_min_size
+  enabled_metrics           = var.enabled_metrics
 
   target_group_arns = compact(
     concat(
